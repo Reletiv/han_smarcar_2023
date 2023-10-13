@@ -4,7 +4,6 @@
 #include "MotorFunction.h"
 #include "UltraSensor.h"
 
-void modeSelection(int selection);
 
 void setup() {
   Serial.begin(9600);
@@ -17,11 +16,8 @@ void setup() {
 
 void loop() {
  modeSelection();
- 
+ bluetooth();
 
 }
 
-void modeSelection(int selection) {
-  
-}
 

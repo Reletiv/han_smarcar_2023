@@ -4,7 +4,7 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 int lastButtonScrollState = 1;
 int lastButtonScrollPressed = 0;
-int selection = 0;
+int selection = 3;
 int lastButtonSelectState = 1;
 int lastButtonSelectPressed = 0;
 int select = 0;
@@ -20,9 +20,21 @@ void buttonsInit() {
 }
 
 void menuReset() {
+  int delayButtonSelect = 50;
+  int buttonSelectState = digitalRead(PIN_BUTTON2);
+  int nuButtonSelectPressed = millis();
+  if (nuButtonSelectPressed >= lastButtonSelectPressed - delayButtonSelect) {
+    if (lastButtonSelectState != buttonSelectState) {
+      if (selection == 3) {
+        selection = select;
+      } else if (select < 3) {
+        selection = 3;
+      }
+    }
+  }
 }
 
-void modeSelection() {
+void menuScroll() {
   int delayButtonScroll = 50;
   int buttonScrollState = digitalRead(PIN_BUTTON1);
   int nuButtonScrollPressed = millis();
@@ -38,23 +50,20 @@ void modeSelection() {
       }
     }
   }
+}
+  
 
-  int delayButtonSelect = 50;
-  int buttonSelectState = digitalRead(PIN_BUTTON2);
-  int nuButtonSelectPressed = millis();
-  if (nuButtonSelectPressed >= lastButtonSelectPressed - delayButtonSelect) {
-    if (lastButtonSelectState != buttonSelectState) {
-      if (selection == 3) {
-        selection = select;
-      } else if (select < 3) {
-        selection = 3;
-      }
-    }
-  }
+void modeSelection() {
+  menuScroll();
+  menuReset();
+
+  
   //Selection of the mode
   switch (selection) {
     case 0:
     bluetooth();
+    lcd.clear();
+    lcd.print("Hoi");
     break;
     
     case 1:
@@ -66,7 +75,7 @@ void modeSelection() {
     break;
 
     case 3:
-    menuPrint(select);
+    menuPrint();
     break;
 
     default:

@@ -1,11 +1,6 @@
 #ifndef io_pins
 #define io_pins
 
-/*
- * This file contains the pinout
- */
-
-
 // Motors
 #define PIN_ENA        9
 #define PIN_INA        7
