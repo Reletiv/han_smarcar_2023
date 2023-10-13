@@ -13,6 +13,11 @@ void motorInit() {
 void motorFunction(char motorDirection, int motorSpeed)
 {
   Serial.println(motorDirection);
+  Serial.println(motorDirection);
+  Serial.println(motorDirection);
+  Serial.println(motorDirection);
+  Serial.println(motorDirection);
+  
   switch(motorDirection) {
   // forwards
   case 'F':
