@@ -7,5 +7,6 @@
 //declaring the functions
 void motorFunction(char motorDirection, int motorSpeed);
 void motorInit(void);
+void motorCheckBlinkers(void);
 
 #endif // MotorFunction
