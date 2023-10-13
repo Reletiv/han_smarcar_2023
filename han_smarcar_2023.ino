@@ -7,16 +7,15 @@
 
 void setup() {
   Serial.begin(9600);
-  
+
   bluetoothInit();
   motorInit();
-  buttonsInit(); 
+  buttonsInit();
   lcdMenuInit();
+  lineTrackerInit();
 }
 
 void loop() {
- modeSelection();
-
+  //  modeSelection();
+  lineTracker();
 }
-
-

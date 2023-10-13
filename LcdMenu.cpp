@@ -63,7 +63,7 @@ void modeSelection() {
     case 0:
     lcd.clear();
     lcd.print("Hoi");
-     bluetooth();
+    bluetooth();
     break;
     
     case 1:
