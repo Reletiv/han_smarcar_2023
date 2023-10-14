@@ -5,7 +5,8 @@
 #include "UltraSensor.h"
 
 
-void setup() {
+void setup() 
+{
   Serial.begin(9600);
 
   bluetoothInit();
@@ -15,7 +16,8 @@ void setup() {
   lineTrackerInit();
 }
 
-void loop() {
-  //  modeSelection();
-  lineTracker();
+void loop() 
+{
+  modeSelection();
 }
+
