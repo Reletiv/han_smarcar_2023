@@ -43,12 +43,12 @@ void ultrasoon()
     Serial.print("distance: ");
     Serial.println(distance);
   }
-  if (distance > 20 && distance < 300) {
+  if (distance > 30 && distance < 1000) {
     motorFunction('F', 100);
     Serial.println(distance);
   }
-  else if (distance <= 20 || distance > 350) {
-    motorFunction('T', 200);
+  else if (distance <= 30 || distance > 350) {
+    motorFunction('T', 150);
     Serial.println(distance);
   }
 }
