@@ -10,6 +10,30 @@ void motorInit() {
   
 }
 
+void motorCheckBlinkers()
+{
+  /*
+  unsigned long currentMillisBlinkers = millis();
+
+  if (currentMillis - previousMillis >= interval) {
+    // save the last time you blinked the LED
+    previousMillis = currentMillis;
+
+    // if the LED is off turn it on and vice-versa:
+    if (ledState == LOW) {
+      ledState = HIGH;
+    } else {
+      ledState = LOW;
+    }
+
+    // set the LED with the ledState of the variable:
+    digitalWrite(ledPin, ledState);
+  }
+  */
+}
+
+
+
 void motorFunction(char motorDirection, int motorSpeed)
 {
   Serial.println(motorDirection);
@@ -56,6 +80,13 @@ void motorFunction(char motorDirection, int motorSpeed)
     // making left and right motors run in opposite direction, this results in the robot turning
     digitalWrite(PIN_INA, HIGH);
     digitalWrite(PIN_INB, LOW); 
+    analogWrite(PIN_ENA, motorSpeed);
+    analogWrite(PIN_ENB, motorSpeed);
+    break; 
+  case 't':
+    // making left and right motors run in opposite direction, this results in the robot turning
+    digitalWrite(PIN_INA, LOW);
+    digitalWrite(PIN_INB, HIGH); 
     analogWrite(PIN_ENA, motorSpeed);
     analogWrite(PIN_ENB, motorSpeed);
     break; 

@@ -61,6 +61,8 @@ void modeSelection() {
   //Selection of the mode
   switch (selection) {
     case 0:
+    lcd.clear();
+    lcd.print("Hoi");
     bluetooth();
     lcd.clear();
     lcd.print("Hoi");
