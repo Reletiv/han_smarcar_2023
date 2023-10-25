@@ -5,6 +5,7 @@
 #include "MotorFunction.h"
 
 //delcaring the functions
-void ultrasoon(void);
+void autonoomDriving(void);
 void initUltrasoon(void);
+int ultrasonicSensor(void);
 #endif // UltraSensor

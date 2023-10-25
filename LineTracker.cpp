@@ -32,36 +32,42 @@ void lineTracker() {
   // Serial.print(sensorFour);
   // Serial.println(" ");
 
+  int distance = ultrasonicSensor();
+  if (distance <= 25 || distance > 1000) {
+    motorFunction('S', 0);
+    Serial.println(distance);
+  } else {
+    if (sensorOne == 0 && sensorTwo == 0 && sensorThree == 0 && sensorFour == 0) {
+      //forward
+      motorFunction('F', SlaveSpeed);
+      Serial.println("Forward");
+          Serial.println(distance);
 
-  if (sensorOne == 0 && sensorTwo == 0 && sensorThree == 0 && sensorFour == 0) {
-    //forward
-    motorFunction('F', SlaveSpeed);
-    Serial.println("Forward");
-  }
-  else if (sensorOne == 0 && sensorTwo == 0 && sensorThree == 1 && sensorFour == 0) {
-    //left
-    motorFunction('T', SlaveSpeed);
-    Serial.println("Left");
-  }
-  else if (sensorOne == 0 && sensorTwo == 1 && sensorThree == 0 && sensorFour == 0) {
-    //right
-    motorFunction('t', SlaveSpeed);
-    Serial.println("right");
-  }
-  else if (sensorOne == 0 && sensorTwo == 0 && sensorThree == 1 || sensorFour == 1) {
-    //big left
-    motorFunction('T', 200);
-    Serial.println("Left");
-  }
-  else if (sensorOne == 1 || sensorTwo == 1 && sensorThree == 0 && sensorFour == 0) {
-    //big right
-    motorFunction('t', 200);
-    Serial.println("right");
-  }
-  else if (sensorOne == 0 && sensorTwo == 1 && sensorThree == 1 && sensorFour == 0) {
-    //forward
-    motorFunction('F', 100);
-    Serial.println("Forward");
+    }
+    else if (sensorOne == 0 && sensorTwo == 0 && sensorThree == 1 && sensorFour == 0) {
+      //left
+      motorFunction('T', SlaveSpeed);
+      Serial.println("Left");
+    }
+    else if (sensorOne == 0 && sensorTwo == 1 && sensorThree == 0 && sensorFour == 0) {
+      //right
+      motorFunction('t', SlaveSpeed);
+      Serial.println("right");
+    }
+    else if (sensorOne == 0 && sensorTwo == 0 && sensorThree == 1 || sensorFour == 1) {
+      //big left
+      motorFunction('T', 200);
+      Serial.println("Left");
+    }
+    else if (sensorOne == 1 || sensorTwo == 1 && sensorThree == 0 && sensorFour == 0) {
+      //big right
+      motorFunction('t', 200);
+      Serial.println("right");
+    }
+    else if (sensorOne == 0 && sensorTwo == 1 && sensorThree == 1 && sensorFour == 0) {
+      //forward
+      motorFunction('F', 100);
+      Serial.println("Forward");
+    }
   }
 }
-

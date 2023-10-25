@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include "MotorFunction.h"
+#include "ultraSensor.h"
 
 
 
