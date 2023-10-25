@@ -36,7 +36,7 @@ void menuReset() {
           motorFunction('S', 0);
         }
       }
-      lastButtonSelectPressed = nuButtonSelectPressed;\
+      lastButtonSelectPressed = nuButtonSelectPressed;
     }
   }
 }
@@ -67,7 +67,6 @@ void modeSelection() {
 
 
   //Selection of the mode
-<<<<<<< HEAD
   int nuPrintTime = millis();
   if (nuPrintTime >= lastPrint + printDelay) {
     switch (selection) {
@@ -77,21 +76,6 @@ void modeSelection() {
         lcd.print("Hoi");
         bluetooth();
         break;
-=======
-  switch (selection) {
-    case 0:
-    lcd.clear();
-    lcd.print("Hoi");
-    bluetooth();
-    lcd.clear();
-    lcd.print("Hoi");
-    break;
-    
-    case 1:
-    //ultraSoon
-    break;
->>>>>>> d9cf4a19f1712b657a0e5f1e70b788f408259bdc
-
       case 1:
         //ultraSoon
         ultrasoon();
