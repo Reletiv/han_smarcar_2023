@@ -5,11 +5,11 @@
 #include "UltraSensor.h"
 
 
-void setup() 
+void setup()
 {
   Serial.begin(9600);
 
- bluetoothInit();
+  bluetoothInit();
   motorInit();
   buttonsInit();
   lcdMenuInit();
@@ -18,10 +18,10 @@ void setup()
 }
 
 void loop() {
-   modeSelection();
- lineTracker();
- motorCheckBlinkers();
- bluetooth();
-ultrasonicSensor();
-autonoomDriving();
+  modeSelection();
+  lineTracker();
+  motorCheckBlinkers();
+  bluetooth();
+  ultrasonicSensor();
+  autonoomDriving();
 }

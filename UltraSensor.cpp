@@ -47,7 +47,7 @@ int ultrasonicSensor()
   //kijk of je de sensor 10 microseconde hoog kunt houden en 2 microseconde laag
   // check to see if it's time to change the state of the TRIGGER
   unsigned long currentMicros = micros();
-      previousMicros1 = currentMicros; // remember the time
+//      previousMicros1 = currentMicros; // remember the time
 
   if ((triggerState == LOW) && (currentMicros - previousMicros >= OffTime))//checks if the the trigger is OFF long enough to see if turn it on
   {
@@ -62,12 +62,12 @@ int ultrasonicSensor()
     digitalWrite(TRIGGER, triggerState); // update the actual trigger
   }
   duration = pulseIn(ECHO, HIGH);//maximaal 10x per seconde? can put a time in microsecond after high ",time"
-  distance = (duration * 0.017);//comagetallen rekenen duurt lang. *0.017 = 0.034/2 (distance = duration : 58)
+  distance = (duration * 0.017);//comagetallen rekenen duurt lang. *0.017 = 0.034/2 (distance = duration / (58+(14/17)))
  // distance = (duration / (58+(14/17));//comagetallen rekenen duurt lang. distance = duration : 58
- previousMicros2 = currentMicros; // remember the time
- executeTime = previousMicros2 - previousMicros1;
- Serial.print("executeTime:");
- Serial.println(executeTime);
+// previousMicros2 = currentMicros; // remember the time
+// executeTime = previousMicros2 - previousMicros1;
+// Serial.print("executeTime:");
+// Serial.println(executeTime);
  return distance;
 
 
