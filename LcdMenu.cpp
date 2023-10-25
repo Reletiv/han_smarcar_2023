@@ -1,15 +1,12 @@
-#include "Arduino.h"
 #include "LcdMenu.h"
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-int lastButtonScrollState = 1;
-int lastButtonScrollPressed = 0;
-int selection = 3;
-int lastButtonSelectState = 1;
-int lastButtonSelectPressed = 0;
-int select = 0;
-int lastPrint = 0;
+int EEPROMaddr = 0;
+unsigned long userTime = 0;
+int lastTimeUpdate = 0;
+
+unsigned long lastPrint = 0;
 int printDelay = 500;
 
 void lcdMenuInit() {
@@ -17,105 +14,118 @@ void lcdMenuInit() {
   lcd.init();
 }
 
-void buttonsInit() {
-  pinMode(PIN_BUTTON1, INPUT);
-  pinMode(PIN_BUTTON2, INPUT);
-}
-
-void menuReset() {
-  int delayButtonSelect = 50;
-  int buttonSelectState = digitalRead(PIN_BUTTON2);
-  int nuButtonSelectPressed = millis();
-  if (nuButtonSelectPressed >= lastButtonSelectPressed + delayButtonSelect) {
-    if (lastButtonSelectState != buttonSelectState) {
-      if (buttonSelectState == LOW) {
-        if (selection == 3) {
-          selection = select;
-        } else if (select < 3) {
-          selection = 3;
-          motorFunction('S', 0);
-        }
-      }
-      lastButtonSelectPressed = nuButtonSelectPressed;
-    }
-  }
-}
-
-void menuScroll() {
-  int delayButtonScroll = 50;
-  int buttonScrollState = digitalRead(PIN_BUTTON1);
-  int nuButtonScrollPressed = millis();
-
-  if (nuButtonScrollPressed >= lastButtonScrollPressed + delayButtonScroll) {
-    if (lastButtonScrollState != buttonScrollState) {
-      if (buttonScrollState == 0) {
-        if (select < 2) {
-          select++;
-        } else if (select == 2) {
-          select = 0;
-        }
-      }
-      lastButtonScrollPressed = nuButtonScrollPressed;
-    }
-  }
-}
-
-
-void modeSelection() {
-  menuScroll();
-  menuReset();
-
-
-  //Selection of the mode
-  int nuPrintTime = millis();
-  if (nuPrintTime >= lastPrint + printDelay) {
-    switch (selection) {
+void menuPrint(int menu) {
+  if (lastPrint + printDelay < millis()) {
+    switch (menu) {
       case 0:
-        //bluetooth
         lcd.clear();
-        lcd.print("Hoi");
-        bluetooth();
+        lcd.print("Bluetooth");
+        lcd.setCursor(0, 1);
+        lcd.print("time ");
+        lcd.print(userTime);
         break;
       case 1:
-        //ultraSoon
-        ultrasoon();
         lcd.clear();
-        lcd.print("hey Stan");
+        lcd.print("Autonoom");
         break;
-
       case 2:
-        //Linetracker
-        lineTracker();
         lcd.clear();
-        lcd.print("test");
+        lcd.print("Slave");
         break;
 
       case 3:
-        menuPrint();
+        lcd.clear();
+        lcd.print("Team Antimotive");
+        lcd.setCursor(0, 1);
+        lcd.print("DeBuggy");
         break;
 
       default:
         break;
     }
-    lastPrint = nuPrintTime;
+    lastPrint = millis();
   }
 }
 
-void menuPrint() {
-  switch (select) {
-    case 0:
-      lcd.clear();
-      lcd.print("Bluetooth");
-      break;
-    case 1:
-      lcd.clear();
-      lcd.print("Autonoom");
-      break;
-    case 2:
-      lcd.clear();
-      lcd.print("Slave");
-      break;
-    default:
-      break;
+void printMode(int mode) {
+  if (lastPrint + printDelay < millis()) {
+    switch (mode) {
+      case 0:
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("Remote 1234 m/s>");  //">"is placeholder voor richtingspijltje
+        break;
+
+      case 1:
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("Auto 1234567 m/s");
+        break;
+
+      case 2:
+        lcd.clear();
+        lcd.setCursor(0, 0);
+        lcd.print("Slave 123456 m/s");
+        break;
+    }
+    lastPrint = millis();
   }
 }
+
+void userTimeUpdate() {
+  unsigned long timeNow = millis();
+  int delay = 60000; // amount of milli seconds in a minute
+  if (timeNow > delay + lastTimeUpdate) {
+    userTime++;
+    EEPROM.write(EEPROMaddr, userTime);
+  }
+}
+
+void userTimeInit() {
+  userTime = EEPROM.read(EEPROMaddr);
+}
+
+
+byte pijl_rechts[] = {
+  B00000,
+  B00000,
+  B00000,
+  B00100,
+  B00010,
+  B11111,
+  B00010,
+  B00100
+};
+
+byte pijl_links[] = {
+  B00000,
+  B00000,
+  B00000,
+  B00100,
+  B01000,
+  B11111,
+  B01000,
+  B00100
+};
+
+byte pijl_vooruit[] = {
+  B00000,
+  B00000,
+  B00000,
+  B00100,
+  B01110,
+  B10101,
+  B00100,
+  B00100
+};
+
+byte pijl_achteruit[] = {
+  B00000,
+  B00000,
+  B00000,
+  B00100,
+  B00100,
+  B10101,
+  B01110,
+  B00100
+};

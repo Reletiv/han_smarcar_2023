@@ -4,6 +4,7 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
+#include <EEPROM.h>
 #include "io_pins.h"
 #include "Bluetooth.h"
 #include "LineTracker.h"
@@ -12,10 +13,10 @@
 
 //declaring the function
 void lcdMenuInit(void);
-void buttonsInit(void);
-void modeSelection(void);
-void menuPrint(void);
-void menuScroll(void);
-void menuReset(void);
+void menuPrint(int menu);
+void printMode(int mode);
+void userTimeUpdate(void);
+void userTimeInit(void);
+
 
 #endif //LcdMenu
