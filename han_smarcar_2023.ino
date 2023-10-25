@@ -13,9 +13,9 @@ void setup() {
   buttonsInit();
   lcdMenuInit();
   lineTrackerInit();
+  initUltrasoon();
 }
 
 void loop() {
-  //  modeSelection();
-  lineTracker();
+  modeSelection();
 }

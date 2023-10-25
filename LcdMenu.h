@@ -6,6 +6,8 @@
 #include <LiquidCrystal_I2C.h>
 #include "io_pins.h"
 #include "Bluetooth.h"
+#include "LineTracker.h"
+#include "UltraSensor.h"
 
 
 //declaring the function
