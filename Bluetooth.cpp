@@ -1,7 +1,7 @@
 
 #include "Bluetooth.h"
 
-SoftwareSerial HM10(2, 3); // RX = 2, TX = 3
+SoftwareSerial HM10(2, 100); // RX = 2, TX = 3
 
 char appData;  
 String inData = "";
@@ -16,7 +16,9 @@ void bluetooth() {
     inData = String(appData);  // save the data in string format
 
     Serial.write(appData);
-
+    Serial.println();
+    Serial.print("inData = ");
+    Serial.println(inData);
   }
 
   if (inData == "F") {

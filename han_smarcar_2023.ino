@@ -14,6 +14,13 @@ void setup()
   buttonsInit();
   lcdMenuInit();
   lineTrackerInit();
+<<<<<<< HEAD
+  initUltrasoon();
+}
+
+void loop() {
+  modeSelection();
+=======
   
 }
 
@@ -22,4 +29,5 @@ void loop()
 //  modeSelection();
   motorCheckBlinkers();
   bluetooth();
+>>>>>>> d9cf4a19f1712b657a0e5f1e70b788f408259bdc
 }
