@@ -14,10 +14,12 @@ void setup()
   buttonsInit();
   lcdMenuInit();
   lineTrackerInit();
+  
 }
 
 void loop() 
 {
-  modeSelection();
+//  modeSelection();
+  motorCheckBlinkers();
+  bluetooth();
 }
-
