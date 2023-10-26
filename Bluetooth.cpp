@@ -6,6 +6,9 @@ SoftwareSerial HM10(2, 100); // RX = 2, TX = 3
 char appData;  
 String inData = "";
 
+int motorSpeed = 200;
+char lastDirection = 'S';
+
 void bluetooth() {
   HM10.listen();  // listen the HM10 port
 
@@ -23,18 +26,30 @@ void bluetooth() {
 
   if (inData == "F") {
     Serial.println("Car go forward");
-    motorFunction('F', 150);
+    motorFunction('F', motorSpeed);
   } else if (inData == "S") {
     Serial.println("Car stop");
-    motorFunction('S', 250);
+    motorFunction('S', 0);
   } else if (inData == "R") {
-  motorFunction('R', 250);
+  motorFunction('R', motorSpeed);
   } else if (inData == "L") {
     motorFunction('L', 250);
   } else if (inData == "T") {
-    motorFunction('T', 250);
+    motorFunction('T', motorSpeed);
   } else if (inData == "B") {
-    motorFunction('B', 250);
+    motorFunction('B', motorSpeed);
+  } else if (inData == "t") {
+    motorFunction('t', motorSpeed);
+  } else if (inData == "V") {
+    if (motorSpeed <= 250) {
+      motorSpeed = motorSpeed + 10;
+      motorFunction(lastDirection, motorSpeed);
+    } 
+  } else if (inData == "v") {
+    if (motorSpeed > 100) {
+      motorSpeed = motorSpeed - 10;
+      motorFunction(lastDirection, motorSpeed);
+    }
   }
 }
 

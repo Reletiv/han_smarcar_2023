@@ -68,6 +68,8 @@ void motorFunction(char motorDirection, int motorSpeed)
     analogWrite(PIN_ENA, motorSpeed);
     analogWrite(PIN_ENB, motorSpeed);
     motorDir = 'F';
+    setDirectionLcd('F');
+
     break;
   // backwards
   case 'B':
@@ -77,6 +79,7 @@ void motorFunction(char motorDirection, int motorSpeed)
     analogWrite(PIN_ENA, motorSpeed);
     analogWrite(PIN_ENB, motorSpeed);  
     motorDir = 'B';
+    setDirectionLcd('B');
     break;
   // left
   case 'R':
@@ -86,6 +89,7 @@ void motorFunction(char motorDirection, int motorSpeed)
     analogWrite(PIN_ENA, motorSpeed);
     analogWrite(PIN_ENB, (motorSpeed / 2));
     motorDir = 'R';
+    setDirectionLcd('R');
     break;
   // right
   case 'L':
@@ -95,6 +99,7 @@ void motorFunction(char motorDirection, int motorSpeed)
     analogWrite(PIN_ENA, (motorSpeed / 2));
     analogWrite(PIN_ENB, motorSpeed);
     motorDir = 'L';
+    setDirectionLcd('L');
     break; 
     // turn 
   case 'T':
@@ -103,7 +108,8 @@ void motorFunction(char motorDirection, int motorSpeed)
     digitalWrite(PIN_INB, LOW); 
     analogWrite(PIN_ENA, motorSpeed);
     analogWrite(PIN_ENB, motorSpeed);
-    motorDir = 'R';
+    motorDir = 'L';
+    setDirectionLcd('L');
     break; 
   case 't':
     // making left and right motors run in opposite direction, this results in the robot turning
@@ -111,7 +117,8 @@ void motorFunction(char motorDirection, int motorSpeed)
     digitalWrite(PIN_INB, HIGH); 
     analogWrite(PIN_ENA, motorSpeed);
     analogWrite(PIN_ENB, motorSpeed);
-    motorDir = 'L';
+    motorDir = 'R';
+    setDirectionLcd('R');
     break; 
   // stop
   case 'S':
@@ -119,6 +126,7 @@ void motorFunction(char motorDirection, int motorSpeed)
     analogWrite(PIN_ENA, 0);
     analogWrite(PIN_ENB, 0);
     motorDir = 'S';
+    setDirectionLcd('S');
     break; 
   }
 }

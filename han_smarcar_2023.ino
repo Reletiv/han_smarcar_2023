@@ -48,6 +48,7 @@ void loop() {
 
     case 1:
       //autonoom
+      autonoomDriving();
       printMode(1);
       break;
 
@@ -80,8 +81,8 @@ void menuResetSelect() {
       buttonSelectState = reading;
       if (buttonSelectState == LOW) {
         modeLock = !modeLock;
-        motorFunction('S', 0);
       }
+      motorFunction('S', 0);
     }
   }
   lastButtonSelectState = reading;

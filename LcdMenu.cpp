@@ -4,14 +4,26 @@ LiquidCrystal_I2C lcd(0x27, 16, 2);
 
 int EEPROMaddr = 0;
 unsigned long userTime = 0;
-int lastTimeUpdate = 0;
+unsigned long lastTimeUpdate = 0;
 
 unsigned long lastPrint = 0;
 int printDelay = 500;
 
+char direction = 'F';
+
 void lcdMenuInit() {
   lcd.backlight();
   lcd.init();
+
+  byte pijl_links[8] = { B00000, B00000, B00000, B00100, B00010, B11111, B00010, B00100 };
+  byte pijl_rechts[8] = { B00000, B00000, B00000, B00100, B01000, B11111, B01000, B00100 };
+  byte pijl_achteruit[8] = { B00000, B00000, B00100, B01110, B10101, B00100, B00100, B00000 };
+  byte pijl_vooruit[8] = { B00000, B00000, B00100, B00100, B10101, B01110, B00100, B00000 };
+
+  lcd.createChar(0, pijl_rechts);
+  lcd.createChar(1, pijl_links);
+  lcd.createChar(2, pijl_vooruit);
+  lcd.createChar(3, pijl_achteruit);
 }
 
 void menuPrint(int menu) {
@@ -23,14 +35,23 @@ void menuPrint(int menu) {
         lcd.setCursor(0, 1);
         lcd.print("time ");
         lcd.print(userTime);
+        lcd.print("min");
         break;
       case 1:
         lcd.clear();
         lcd.print("Autonoom");
+        lcd.setCursor(0, 1);
+        lcd.print("time ");
+        lcd.print(userTime);
+        lcd.print("min");
         break;
       case 2:
         lcd.clear();
         lcd.print("Slave");
+        lcd.setCursor(0, 1);
+        lcd.print("time ");
+        lcd.print(userTime);
+        lcd.print("min");
         break;
 
       case 3:
@@ -53,19 +74,34 @@ void printMode(int mode) {
       case 0:
         lcd.clear();
         lcd.setCursor(0, 0);
-        lcd.print("Remote 1234 m/s>");  //">"is placeholder voor richtingspijltje
+        lcd.print(">Remote");
+        printDirectionArrow();
+        lcd.setCursor(0, 1);
+        lcd.print("time ");
+        lcd.print(userTime);
+        lcd.print("min");
         break;
 
       case 1:
         lcd.clear();
         lcd.setCursor(0, 0);
-        lcd.print("Auto 1234567 m/s");
+        lcd.print(">Autonoom");
+        printDirectionArrow();
+        lcd.setCursor(0, 1);
+        lcd.print("time ");
+        lcd.print(userTime);
+        lcd.print("min");
         break;
 
       case 2:
         lcd.clear();
         lcd.setCursor(0, 0);
-        lcd.print("Slave 123456 m/s");
+        lcd.print(">Slave");
+        printDirectionArrow();
+        lcd.setCursor(0, 1);
+        lcd.print("time ");
+        lcd.print(userTime);
+        lcd.print("min");
         break;
     }
     lastPrint = millis();
@@ -74,10 +110,11 @@ void printMode(int mode) {
 
 void userTimeUpdate() {
   unsigned long timeNow = millis();
-  int delay = 60000; // amount of milli seconds in a minute
-  if (timeNow > delay + lastTimeUpdate) {
+  long delay = 60000;  // amount of milli seconds in a minute
+  if (timeNow >= delay + lastTimeUpdate) {
     userTime++;
     EEPROM.write(EEPROMaddr, userTime);
+    lastTimeUpdate = timeNow;
   }
 }
 
@@ -85,47 +122,22 @@ void userTimeInit() {
   userTime = EEPROM.read(EEPROMaddr);
 }
 
+void setDirectionLcd(char dir) {
+  direction = dir;
+}
 
-byte pijl_rechts[] = {
-  B00000,
-  B00000,
-  B00000,
-  B00100,
-  B00010,
-  B11111,
-  B00010,
-  B00100
-};
-
-byte pijl_links[] = {
-  B00000,
-  B00000,
-  B00000,
-  B00100,
-  B01000,
-  B11111,
-  B01000,
-  B00100
-};
-
-byte pijl_vooruit[] = {
-  B00000,
-  B00000,
-  B00000,
-  B00100,
-  B01110,
-  B10101,
-  B00100,
-  B00100
-};
-
-byte pijl_achteruit[] = {
-  B00000,
-  B00000,
-  B00000,
-  B00100,
-  B00100,
-  B10101,
-  B01110,
-  B00100
-};
+void printDirectionArrow() {
+  if (direction == 'F') {
+    lcd.setCursor(15, 0);
+    lcd.write(byte(2));
+  } else if (direction == 'R') {
+    lcd.setCursor(15, 0);
+    lcd.write(byte(0));
+  } else if (direction == 'L') {
+    lcd.setCursor(15, 0);
+    lcd.write(byte(1));
+  } else if (direction == 'B') {
+    lcd.setCursor(15, 0);
+    lcd.write(byte(3));
+  }
+}

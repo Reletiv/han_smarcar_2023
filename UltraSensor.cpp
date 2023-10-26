@@ -35,7 +35,7 @@ void autonoomDriving()
     motorFunction('F', 100);
     Serial.println(distance);
   }
-  else if (distance <= 30 || distance > 1000) {
+  else if ((distance <= 30 || distance > 1000) && distance != 0) {
     motorFunction('T', 150);
     Serial.println(distance);
   }
@@ -69,7 +69,4 @@ int ultrasonicSensor()
 // Serial.print("executeTime:");
 // Serial.println(executeTime);
  return distance;
-
-
-
 }
